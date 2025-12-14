@@ -83,7 +83,7 @@ The following section contains key visualizations generated from the model.
 
 <details>
 <summary>
-  <img src="https://img.shields.io/badge/CLICK_HERE_TO_EXPAND-CHARTS_%26_VISUALIZATIONS-FF4500?style=for-the-badge&logo=google-analytics&logoColor=white" alt="Click to Expand">
+<summary><strong>🚨 CLICK HERE to expand Charts & Visualizations 🚨</strong></summary>
 </summary>
 <br>
 
