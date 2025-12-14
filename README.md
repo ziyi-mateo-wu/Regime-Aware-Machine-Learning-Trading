@@ -86,9 +86,6 @@ The following section contains key visualizations generated from the model.
 <br>
 
 #### 1. SPY 10-Year Historical Price (Structural Breaks)
-...
-
-#### 1. SPY 10-Year Historical Price (Structural Breaks)
 Visualizing the 2020 COVID-19 crash and the 2022 regime shift. The dataset contains **2,516 clean trading days**.
 <img width="100%" alt="SPY Price" src="<Figure size 1200x600 with 1 Axes><img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/3805d9b4-6b7d-42e5-9cb7-abaf01de1201" />
 " />
