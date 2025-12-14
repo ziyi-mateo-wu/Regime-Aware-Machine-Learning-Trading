@@ -16,10 +16,69 @@ This project implements an algorithmic trading strategy utilizing **Regime-Switc
     * **Volatile Regime:** Deploys **Gradient Boosting** to identify non-linear reversal patterns.
 * **Risk Management:** Strictly enforces **look-ahead bias prevention** during feature engineering.
 
+### 📐 Mathematical Framework
+
+The strategy relies on rigorous quantitative definitions for regime detection and signal generation.
+
+#### 1. Regime Detection (Volatility Thresholding)
+Market regimes ($R_t$) are classified dynamically based on the rolling volatility of log-returns. Let $r_t = \ln(P_t / P_{t-1})$ be the daily log-return. The rolling volatility $\sigma_t$ over a window $w$ is defined as:
+
+$$
+\sigma_t = \sqrt{\frac{1}{w-1} \sum_{i=0}^{w-1} (r_{t-i} - \bar{r}_t)^2}
+$$
+
+The market regime is determined by a dynamic median threshold $\theta_t$:
+
+$$
+R_t = 
+\begin{cases} 
+\text{Volatile (Bear)}, & \text{if } \sigma_t > \theta_t \\
+\text{Stable (Bull)}, & \text{if } \sigma_t \leq \theta_t
+\end{cases}
+$$
+
+#### 2. Feature Engineering: RSI with Wilder's Smoothing
+To capture momentum without noise, we utilize the Relative Strength Index (RSI) with Exponential Weighted Moving Average (EWMA). The Relative Strength ($RS$) is calculated as:
+
+$$
+RS_t = \frac{\text{EWMA}(\text{Gain}, \alpha)}{\text{EWMA}(\text{Loss}, \alpha)}
+$$
+
+$$
+RSI_t = 100 - \frac{100}{1 + RS_t}
+$$
+
+Where $\alpha$ is the smoothing factor $\frac{1}{14}$, aligning with Wilder’s original formulation to detect overbought/oversold conditions during structural breaks.
+
 ### 🛠️ Tech Stack
 * **Language:** Python
 * **Libraries:** `scikit-learn`, `pandas`, `yfinance`, `matplotlib`, `numpy`
 * **Techniques:** Ensemble Learning, Vectorised Backtesting
+
+### 🏗️ Project Architecture & Methodology
+
+The project pipeline is structured into four distinct stages, ensuring statistical rigor and data integrity.
+
+#### Phase 1: Quantitative Feature Engineering
+Derived technical indicators to capture market momentum and structural breaks:
+* **Trend:** 200-day Simple Moving Average (SMA) to identify long-term support/resistance levels.
+* **Momentum:** Relative Strength Index (RSI) with Wilder’s Smoothing to detect overbought/oversold extremes.
+* **Volatility:** Rolling standard deviation of log-returns to quantify market fear/uncertainty.
+
+#### Phase 2: Target Engineering & Bias Prevention (Crucial)
+To strictly prevent **Look-Ahead Bias**, the prediction target was constructed using next-day returns ($P_{t+1}$):
+* **Binary Classification:** Target $Y_t = 1$ if $Return_{t+1} > 0$, else $0$.
+* **Data Integrity:** Validated feature alignment to ensure the model only trades on information available at time $t$.
+
+#### Phase 3: Dynamic Regime Classification
+Instead of a static model, the system implements a **Regime-Switching Framework** based on volatility clustering:
+* **Low Volatility Regime (Bull):** Defined where $\sigma_t \leq \text{Median}(\sigma_{historical})$. Market tends to mean-revert or trend steadily.
+* **High Volatility Regime (Bear):** Defined where $\sigma_t > \text{Median}(\sigma_{historical})$. Market exhibits panic selling and non-linear behavior.
+
+#### Phase 4: Adaptive Ensemble Modeling
+Comparative analysis of linear vs. non-linear estimators:
+* **Baseline:** Logistic Regression (Linear) - failed to capture complex patterns (Accuracy: ~49%).
+* **Challenger:** Random Forest (Non-Linear Ensemble) - successfully captured latent interactions between Volatility and RSI, achieving an edge in out-of-sample testing.
 
 ### 📊 Detailed Analysis (Interactive)
 
