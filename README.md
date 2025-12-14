@@ -1,3 +1,26 @@
+# Regime-Aware Algorithmic Trading System 📈
+
+> A machine learning-based trading system that dynamically adapts to market regimes (Stable vs. Volatile) to outperform buy-and-hold strategies.
+
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![Language](https://img.shields.io/badge/Language-Python-blue)
+![Tech](https://img.shields.io/badge/Tech-Scikit%20Learn%20%7C%20Pandas-orange)
+
+### 📌 Project Overview
+This project implements an algorithmic trading strategy utilizing **Regime-Switching mechanisms**. By classifying market states using **Statistical Volatility Thresholding**, the system deploys adaptive models to optimize risk-adjusted returns.
+
+### 🚀 Key Features
+* **Regime Detection:** Dynamically classifies market states into *Stable* or *Volatile* using rolling median volatility.
+* **Adaptive Strategy:**
+    * **Stable Regime:** Deploys **Random Forest** to capture trend continuations.
+    * **Volatile Regime:** Deploys **Gradient Boosting** to identify non-linear reversal patterns.
+* **Risk Management:** Strictly enforces **look-ahead bias prevention** during feature engineering.
+
+### 🛠️ Tech Stack
+* **Language:** Python
+* **Libraries:** `scikit-learn`, `pandas`, `yfinance`, `matplotlib`, `numpy`
+* **Techniques:** Ensemble Learning, Vectorised Backtesting
+
 ### 📊 Detailed Analysis (Interactive)
 
 The following section contains the key visualizations generated from the model, providing deep insights into market dynamics and model performance.
