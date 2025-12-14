@@ -29,8 +29,11 @@ The following section contains the key visualizations generated from the model.
 <summary><strong>🔻 Click here to expand Visualizations & Charts</strong></summary>
 <br>
 
-#### 1. Cumulative Returns vs Benchmark
-![Returns](plot1.png)
+#### 1. SPY 10-Year Historical Price (2014–2024)
+SPY 10-Year Historical Price
+This chart visualizes the SPY ETF’s price trajectory over the past decade, highlighting a key structural break during the COVID-19 crash in early 2020. The dataset () contains 2,516 clean trading days and is locally cached to ensure reproducibility and eliminate API dependency.
+<img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/13b2d7ff-f5fd-4c57-a232-d58ef43adfba" />
+
 #### 2. Regime Classification (Volatility States)
 ![Regimes](plot2.png)
 
