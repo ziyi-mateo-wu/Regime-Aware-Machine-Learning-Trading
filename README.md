@@ -82,9 +82,7 @@ Dissecting the Random Forest performance by volatility state reveals the true so
 The following section contains key visualizations generated from the model.
 
 <details>
-<summary>
 <summary><strong>🚨 CLICK HERE to expand Charts & Visualizations 🚨</strong></summary>
-</summary>
 <br>
 
 #### 1. SPY 10-Year Historical Price (Structural Breaks)
