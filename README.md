@@ -70,8 +70,8 @@ Dissecting the Random Forest performance by volatility state reveals the true so
 
 | Regime | Volatility State | Accuracy | Sample Size |
 | :--- | :--- | :---: | :---: |
-| **Low Volatility** | $\sigma_t \le 0.007$ | **54.93%** 🟢 | $N=71$ |
-| **High Volatility** | $\sigma_t > 0.007$ | 50.70% 🔴 | $N=430$ |
+| **Low Volatility** | $\sigma_t \le 0.007$ | **54.93%** PASS | $N=71$ |
+| **High Volatility** | $\sigma_t > 0.007$ | 50.70% FAILED | $N=430$ |
 
 > **Strategic Insight:** The model possesses a **+4.23% Performance Spread** in calm markets. In high volatility, exogenous shocks render technical signals irrelevant.
 
@@ -87,15 +87,25 @@ The following section contains key visualizations generated from the model.
 
 #### 1. SPY 10-Year Historical Price (Structural Breaks)
 Visualizing the 2020 COVID-19 crash and the 2022 regime shift. The dataset contains **2,516 clean trading days**.
-<img width="100%" alt="SPY Price" src="spy_price.png" />
+<img width="100%" alt="SPY Price" src="<Figure size 1200x600 with 1 Axes><img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/3805d9b4-6b7d-42e5-9cb7-abaf01de1201" />
+" />
 
-#### 2. Regime-Based Performance Analysis
+#### 2. Analytical Observations: Why These Features Matter?
+*(Visualizing Trend, Momentum, and Regime components)*
+* **Trend Dynamics ($SMA_{200}$):** The 200-day SMA acted as reliable **"Dynamic Support"** from 2014-2019. The decisive breakdown in 2022 signaled a structural regime change, validating SMAs as effective filters for Bear Markets.
+* **Sentiment Extremes ($RSI$):** During the March 2020 liquidity crisis, RSI plunged to **~15** (far below the standard 30). This mathematical extreme signaled **"Seller Exhaustion"**, preceding a sharp mean-reversion event.
+* **Volatility Clustering (Regime):** The data exhibits distinct **"Heteroscedasticity"** (periods of calm vs. explosions of risk). This visually proves that a static model would fail during the 2020/2022 shocks, necessitating our **Regime-Aware architecture**
+<img width="100%" alt="Feature Engineering Analysis" src="<Figure size 1200x1200 with 3 Axes><img width="1189" height="1189" alt="image" src="https://github.com/user-attachments/assets/4f2b87e5-320f-4fe8-a667-9ab00e430ada" />
+" />
+
+#### 3. Regime-Based Performance Analysis
 The bar chart below illustrates the "Fair Weather Alpha". Note the clear performance degradation in the High Volatility regime (Red bar) compared to the Low Volatility regime (Green bar).
 <img width="100%" alt="Regime Analysis" src="regime_analysis.png" />
 
-#### 3. Confusion Matrix Comparison
+#### 4. Confusion Matrix Comparison
 Contrasting the "Always Buy" bias of Logistic Regression against the nuanced predictions of Random Forest.
-<img width="100%" alt="Confusion Matrix" src="confusion_matrix.png" />
+<img width="100%" alt="Confusion Matrix" src="<Figure size 1600x600 with 2 Axes><img width="1589" height="589" alt="image" src="https://github.com/user-attachments/assets/a85f0d3b-c562-40c9-b50a-9cc7decb01b1" />
+" />
 
 <br>
 <p align="center">
