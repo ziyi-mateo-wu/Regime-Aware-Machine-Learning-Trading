@@ -1,129 +1,132 @@
-# Regime-Aware Algorithmic Trading System 📈
+# Regime-Aware Machine Learning Strategy 📈
 
-> A machine learning-based trading system that dynamically adapts to market regimes (Stable vs. Volatile) to outperform buy-and-hold strategies.
+> A rigorous quantitative framework analyzing how volatility regimes impact machine learning efficacy in financial markets.
 
-![Status](https://img.shields.io/badge/Status-Completed-success)
-![Language](https://img.shields.io/badge/Language-Python-blue)
-![Tech](https://img.shields.io/badge/Tech-Scikit%20Learn%20%7C%20Pandas-orange)
+[![Status](https://img.shields.io/badge/Strategy-Volatility%20Filtering-blueviolet?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
+[![Performance](https://img.shields.io/badge/Calm%20Regime%20Acc-54.93%25-green?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
+[![Language](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python)](https://www.python.org/)
 
-### 📌 Project Overview
-This project implements an algorithmic trading strategy utilizing **Regime-Switching mechanisms**. By classifying market states using **Statistical Volatility Thresholding**, the system deploys adaptive models to optimize risk-adjusted returns.
+### 💡 Context & Inspiration
+The conceptual foundation for this project stems from practices in **Credit Risk Control (HSBC)**. Traditional models often fail when their underlying assumptions about market stability are violated.
 
-### 🚀 Key Features
-* **Regime Detection:** Dynamically classifies market states into *Stable* or *Volatile* using rolling median volatility.
-* **Adaptive Strategy:**
-    * **Stable Regime:** Deploys **Random Forest** to capture trend continuations.
-    * **Volatile Regime:** Deploys **Gradient Boosting** to identify non-linear reversal patterns.
-* **Risk Management:** Strictly enforces **look-ahead bias prevention** during feature engineering.
+This project implements a **"Fair Weather Alpha"** strategy: instead of treating prediction as a static task, it builds a system that strictly filters for the "regime" it assumes—engaging capital only when market noise is low and technical signals are reliable.
+
+---
+
+### 🏗️ Project Architecture
+The pipeline is structured into four distinct engineering phases to ensuring statistical rigor and data integrity.
+
+#### Phase 1: Quantitative Feature Engineering
+Derived technical indicators to capture market dynamics:
+* **Trend:** 200-day Simple Moving Average (SMA) to identify long-term support.
+* **Momentum:** Relative Strength Index (RSI) with **Wilder’s Smoothing** to detect liquidity crises (e.g., March 2020).
+* **Volatility:** Rolling standard deviation of log-returns to quantify market fear.
+
+#### Phase 2: "Blind" Regime Calibration (Anti-Leakage)
+To strictly prevent **Look-Ahead Bias**, the regime threshold was calibrated exclusively on historical data:
+* **Calibration:** Calculated the median volatility ($\sigma_{train} \approx 0.007$) solely from the Training Set (2014-2021).
+* **Application:** Applied this *frozen* threshold to the Test Set (2022-2024) to segment markets into **"Calm"** vs. **"Volatile"**.
+
+#### Phase 3: Adaptive Ensemble Modeling
+Comparative analysis of linear vs. non-linear estimators:
+* **Baseline:** Logistic Regression (Linear) — Failed to capture complex patterns (Accuracy: ~49%).
+* **Challenger:** Random Forest (Non-Linear Ensemble) — Successfully captured latent interactions between Volatility and RSI.
+
+---
 
 ### 📐 Mathematical Framework
+The strategy relies on rigorous quantitative definitions for signal generation.
 
-The strategy relies on rigorous quantitative definitions for regime detection and signal generation.
-
-#### 1. Regime Detection (Volatility Thresholding)
-Market regimes ($R_t$) are classified dynamically based on the rolling volatility of log-returns. Let $r_t = \ln(P_t / P_{t-1})$ be the daily log-return. The rolling volatility $\sigma_t$ over a window $w$ is defined as:
-
-$$
-\sigma_t = \sqrt{\frac{1}{w-1} \sum_{i=0}^{w-1} (r_{t-i} - \bar{r}_t)^2}
-$$
-
-The market regime is determined by a dynamic median threshold $\theta_t$:
+**1. Dynamic Regime Classification**
+Market regimes ($R_t$) are classified based on the rolling volatility ($\sigma_t$) relative to the historical median threshold ($\theta_{train}$):
 
 $$
 R_t = 
 \begin{cases} 
-\text{Volatile (Bear)}, & \text{if } \sigma_t > \theta_t \\
-\text{Stable (Bull)}, & \text{if } \sigma_t \leq \theta_t
+\text{Volatile (Bear)}, & \text{if } \sigma_t > \theta_{train} \\
+\text{Stable (Bull)}, & \text{if } \sigma_t \leq \theta_{train}
 \end{cases}
 $$
 
-#### 2. Feature Engineering: RSI with Wilder's Smoothing
-To capture momentum without noise, we utilize the Relative Strength Index (RSI) with Exponential Weighted Moving Average (EWMA). The Relative Strength ($RS$) is calculated as:
+**2. Target Engineering**
+To prevent look-ahead bias, the target $Y_t$ is aligned with the *next day's* return $r_{t+1}$:
+$$Y_t = \mathbb{I}(r_{t+1} > 0)$$
 
-$$
-RS_t = \frac{\text{EWMA}(\text{Gain}, \alpha)}{\text{EWMA}(\text{Loss}, \alpha)}
-$$
+---
 
-$$
-RSI_t = 100 - \frac{100}{1 + RS_t}
-$$
+### 📊 Performance & Alpha Discovery
 
-Where $\alpha$ is the smoothing factor $\frac{1}{14}$, aligning with Wilder’s original formulation to detect overbought/oversold conditions during structural breaks.
+The analysis revealed a crucial divergence in model performance, validating the **"Fair Weather Alpha"** hypothesis.
 
-### 🛠️ Tech Stack
-* **Language:** Python
-* **Libraries:** `scikit-learn`, `pandas`, `yfinance`, `matplotlib`, `numpy`
-* **Techniques:** Ensemble Learning, Vectorised Backtesting
+#### 1. Model Comparison (Test Set 2022-2024)
 
-### 🏗️ Project Architecture & Methodology
+| Metric | Logistic Regression (Baseline) | Random Forest (Challenger) |
+| :--- | :---: | :---: |
+| **Overall Accuracy** | 49.50% (Fail) | **51.30%** (Edge) |
+| **Behavior** | "Always Buy" Bias | Captured Non-linear Signals |
 
-The project pipeline is structured into four distinct stages, ensuring statistical rigor and data integrity.
+#### 2. The Regime Spread (Key Discovery)
+Dissecting the Random Forest performance by volatility state reveals the true source of Alpha:
 
-#### Phase 1: Quantitative Feature Engineering
-Derived technical indicators to capture market momentum and structural breaks:
-* **Trend:** 200-day Simple Moving Average (SMA) to identify long-term support/resistance levels.
-* **Momentum:** Relative Strength Index (RSI) with Wilder’s Smoothing to detect overbought/oversold extremes.
-* **Volatility:** Rolling standard deviation of log-returns to quantify market fear/uncertainty.
+| Regime | Volatility State | Accuracy | Sample Size |
+| :--- | :--- | :---: | :---: |
+| **Low Volatility** | $\sigma_t \le 0.007$ | **54.93%** 🟢 | $N=71$ |
+| **High Volatility** | $\sigma_t > 0.007$ | 50.70% 🔴 | $N=430$ |
 
-#### Phase 2: Target Engineering & Bias Prevention (Crucial)
-To strictly prevent **Look-Ahead Bias**, the prediction target was constructed using next-day returns ($P_{t+1}$):
-* **Binary Classification:** Target $Y_t = 1$ if $Return_{t+1} > 0$, else $0$.
-* **Data Integrity:** Validated feature alignment to ensure the model only trades on information available at time $t$.
+> **Strategic Insight:** The model possesses a **+4.23% Performance Spread** in calm markets. In high volatility, exogenous shocks render technical signals irrelevant.
 
-#### Phase 3: Dynamic Regime Classification
-Instead of a static model, the system implements a **Regime-Switching Framework** based on volatility clustering:
-* **Low Volatility Regime (Bull):** Defined where $\sigma_t \leq \text{Median}(\sigma_{historical})$. Market tends to mean-revert or trend steadily.
-* **High Volatility Regime (Bear):** Defined where $\sigma_t > \text{Median}(\sigma_{historical})$. Market exhibits panic selling and non-linear behavior.
+---
 
-#### Phase 4: Adaptive Ensemble Modeling
-Comparative analysis of linear vs. non-linear estimators:
-* **Baseline:** Logistic Regression (Linear) - failed to capture complex patterns (Accuracy: ~49%).
-* **Challenger:** Random Forest (Non-Linear Ensemble) - successfully captured latent interactions between Volatility and RSI, achieving an edge in out-of-sample testing.
+### 📉 Detailed Analysis (Interactive)
 
-### 📊 Detailed Analysis (Interactive)
-
-The following section contains the key visualizations generated from the model, providing deep insights into market dynamics and model performance.
+The following section contains key visualizations generated from the model.
 
 <details>
-<summary><strong>🔻 Click here to expand Visualizations & Charts</strong></summary>
+<summary><strong>🔻 Click here to expand Charts & Visualizations</strong></summary>
 <br>
 
-#### 1. SPY 10-Year Historical Price (2014–2024)
-This chart visualizes the SPY ETF’s price trajectory over the past decade, highlighting a key **structural break** during the COVID-19 crash in early 2020. The dataset contains **2,516 clean trading days** and is locally cached to ensure reproducibility and eliminate API dependency.
+#### 1. SPY 10-Year Historical Price (Structural Breaks)
+Visualizing the 2020 COVID-19 crash and the 2022 regime shift. The dataset contains **2,516 clean trading days**.
+<img width="100%" alt="SPY Price" src="spy_price.png" />
 
-<img width="100%" alt="SPY Price History" src="https://github.com/user-attachments/assets/13b2d7ff-f5fd-4c57-a232-d58ef43adfba" />
+#### 2. Regime-Based Performance Analysis
+The bar chart below illustrates the "Fair Weather Alpha". Note the clear performance degradation in the High Volatility regime (Red bar) compared to the Low Volatility regime (Green bar).
+<img width="100%" alt="Regime Analysis" src="regime_analysis.png" />
 
-#### 2. Analytical Observations & Theoretical Justification (RSI Analysis)
-The feature‑engineering analysis reveals three complementary dimensions of market behavior essential for regime‑aware modeling:
-
-* **Trend Dynamics:** Captured through the **200‑day SMA**, showing that from 2014–2019 the long‑term average acted as reliable support, whereas the decisive breakdown in 2022 marked a structural regime shift.
-* **Sentiment (RSI):** Quantified via Wilder’s EWM smoothing, highlighting psychological extremes—most notably the March 2020 liquidity crisis where RSI collapsed to **~15**, signaling forced liquidation and setting the stage for sharp **mean‑reversion**.
-* **Volatility Clustering:** Empirically confirming the **heteroscedastic nature** of financial time series, with long calm periods punctuated by explosive spikes in 2020 and 2022.
-
-These engineered features form the foundation of the regime‑aware framework and motivate the transition to constructing a prediction target that avoids look‑ahead bias.
-
-<img width="100%" alt="RSI and Volatility Analysis" src="https://github.com/user-attachments/assets/7f3ef468-8156-4c18-b522-23fb3eaba6dd" />
-
-#### 3. Model Breakdown vs Statistical Edge: A Regime-Aware Comparison
-The confusion matrices expose a regime-dependent modeling flaw in linear models versus non-linear ensemble methods:
-
-* **Logistic Regression Failure:** Achieved only **49.50% accuracy** and predicted “Up” on every test day. It failed to generalize beyond the bull regime, reflecting an “Always Buy” bias hard-coded by linear assumptions.
-* **Random Forest Edge:** Achieved **51.30% accuracy** and correctly identified **26 Down days**. By leveraging feature interactions (e.g., Volatility × RSI), it captured latent non-linear signals.
-
-This **1.80% edge** above random chance validates the regime-aware hypothesis. Future iterations will further dissect model performance across specific volatility-defined regimes to isolate Alpha persistence.
-
-<img width="100%" alt="Confusion Matrix Comparison" src="https://github.com/user-attachments/assets/7bc21584-54a1-4dcf-9a65-a09d2765bf7f" />
+#### 3. Confusion Matrix Comparison
+Contrasting the "Always Buy" bias of Logistic Regression against the nuanced predictions of Random Forest.
+<img width="100%" alt="Confusion Matrix" src="confusion_matrix.png" />
 
 <br>
 <p align="center">
-  <a href="trading_strategy.ipynb">
+  <a href="Regime_Aware_ML_Strategy.ipynb">
     <img src="https://img.shields.io/badge/View_Source_Code-.ipynb_File-blue?style=for-the-badge&logo=jupyter" alt="View Code">
   </a>
 </p>
 
 </details>
 
+---
+
+### 💡 Strategic Implication: The Volatility Filter
+
+The project proves that **"When to trade" is as important as "What to trade."** Instead of a static "always-on" predictor, the model functions best as a **Risk-On / Risk-Off Switch**:
+
+1.  **Risk-Off (Cash):** When Rolling Volatility > 0.007, the model's edge disappears. **Strategy: Stay in Cash.**
+2.  **Risk-On (Trade):** When Rolling Volatility ≤ 0.007, the model achieves **~55% accuracy**. **Strategy: Engage Capital.**
+
+This transformation turns a marginal 51% model into a robust, regime-conditional trading system.
+
+---
+
 ### 💻 How to Run
+
 1.  Clone the repository.
-2.  Install dependencies: `pip install pandas scikit-learn yfinance matplotlib`
-3.  Run the script: `python trading_strategy.py`
+2.  Install dependencies:
+    ```bash
+    pip install pandas numpy scikit-learn yfinance matplotlib seaborn
+    ```
+3.  Run the Jupyter Notebook:
+    ```bash
+    jupyter notebook Regime_Aware_ML_Strategy.ipynb
+    ```
