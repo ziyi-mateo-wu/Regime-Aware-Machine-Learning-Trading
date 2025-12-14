@@ -21,8 +21,13 @@ This project implements an algorithmic trading strategy utilizing **Regime-Switc
 * **Libraries:** `scikit-learn`, `pandas`, `yfinance`, `matplotlib`, `numpy`
 * **Techniques:** Ensemble Learning, Vectorised Backtesting
 
-### 📊 Results
-*(Performance comparison: Strategy vs. Benchmark)*
+### 📊 Detailed Analysis & Code
+
+[![View in nbviewer](https://img.shields.io/badge/View%20Full%20Notebook-nbviewer-orange?style=for-the-badge&logo=jupyter)](你的_nbviewer_新网址_粘贴在这里)
+
+> 👆 **Click the button above** to render the full analysis with interactive charts (High Performance).
+
+[![Preview](results_cover.png)](你的_nbviewer_新网址_粘贴在这里)
 
 ![Model Performance](results_plot.png)
 ### 💻 How to Run
