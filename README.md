@@ -21,13 +21,30 @@ This project implements an algorithmic trading strategy utilizing **Regime-Switc
 * **Libraries:** `scikit-learn`, `pandas`, `yfinance`, `matplotlib`, `numpy`
 * **Techniques:** Ensemble Learning, Vectorised Backtesting
 
-### 📊 Detailed Analysis & Code
+### 📊 Detailed Analysis (Interactive)
 
-[![View in nbviewer](https://img.shields.io/badge/View%20Full%20Notebook-nbviewer-orange?style=for-the-badge&logo=jupyter)]((https://nbviewer.org/github/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading/blob/main/Regime_Aware_ML_Strategy.ipynb))
+The following section contains the key visualizations generated from the model. 
 
-> 👆 **Click the button above** to render the full analysis with interactive charts (High Performance).
+<details>
+<summary><strong>🔻 Click here to expand Visualizations & Charts</strong></summary>
+<br>
 
-[![Preview](results_cover.png)]((https://nbviewer.org/github/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading/blob/main/Regime_Aware_ML_Strategy.ipynb))
+#### 1. Cumulative Returns vs Benchmark
+![Returns](plot1.png)
+#### 2. Regime Classification (Volatility States)
+![Regimes](plot2.png)
+
+#### 3. Model Diagnostics
+![Diagnostics](plot3.png)
+
+<br>
+<p align="center">
+  <a href="trading_strategy.ipynb">
+    <img src="https://img.shields.io/badge/View_Source_Code-.ipynb_File-blue?style=for-the-badge&logo=jupyter" alt="View Code">
+  </a>
+</p>
+
+</details>
 
 ![Model Performance](results_plot.png)
 ### 💻 How to Run
