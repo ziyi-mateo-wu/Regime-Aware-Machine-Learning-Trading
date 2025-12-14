@@ -82,8 +82,13 @@ Dissecting the Random Forest performance by volatility state reveals the true so
 The following section contains key visualizations generated from the model.
 
 <details>
-<summary><strong>🔻 Click here to expand Charts & Visualizations</strong></summary>
+<summary>
+  <img src="https://img.shields.io/badge/CLICK_HERE_TO_EXPAND-CHARTS_%26_VISUALIZATIONS-FF4500?style=for-the-badge&logo=google-analytics&logoColor=white" alt="Click to Expand">
+</summary>
 <br>
+
+#### 1. SPY 10-Year Historical Price (Structural Breaks)
+...
 
 #### 1. SPY 10-Year Historical Price (Structural Breaks)
 Visualizing the 2020 COVID-19 crash and the 2022 regime shift. The dataset contains **2,516 clean trading days**.
