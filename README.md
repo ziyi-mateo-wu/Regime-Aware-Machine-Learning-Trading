@@ -30,15 +30,18 @@ The following section contains the key visualizations generated from the model.
 <br>
 
 #### 1. SPY 10-Year Historical Price (2014–2024)
-SPY 10-Year Historical Price
+
 This chart visualizes the SPY ETF’s price trajectory over the past decade, highlighting a key structural break during the COVID-19 crash in early 2020. The dataset () contains 2,516 clean trading days and is locally cached to ensure reproducibility and eliminate API dependency.
 <img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/13b2d7ff-f5fd-4c57-a232-d58ef43adfba" />
 
-#### 2. Regime Classification (Volatility States)
-![Regimes](plot2.png)
+#### 2. Analytical Observations & Theoretical Justificatio (RSI analysis)
+The feature‑engineering analysis reveals three complementary dimensions of market behavior essential for regime‑aware modeling. Trend dynamics, captured through the 200‑day SMA, show that from 2014–2019 the long‑term average acted as reliable support, whereas the decisive breakdown in 2022 marked a structural regime shift separating “Buy‑the‑Dip” conditions from true bear markets. Sentiment, quantified via RSI using Wilder’s EWM smoothing, highlights psychological extremes—most notably the March 2020 liquidity crisis, where RSI collapsed to ~15, signaling forced liquidation and setting the stage for sharp mean‑reversion. Finally, rolling volatility exposes pronounced clustering, with long calm periods punctuated by explosive spikes in 2020 and 2022, empirically confirming the heteroscedastic nature of financial time series. Together, these engineered features—trend, sentiment, and risk—form the foundation of the regime‑aware framework and motivate the transition to Task 3: constructing a prediction target that avoids look‑ahead bias and aligns with the market’s structural dynamics.
+<img width="1189" height="1189" alt="image" src="https://github.com/user-attachments/assets/7f3ef468-8156-4c18-b522-23fb3eaba6dd" />
 
-#### 3. Model Diagnostics
-![Diagnostics](plot3.png)
+#### 3. Model Breakdown vs Statistical Edge: A Regime-Aware Comparison
+The confusion matrices expose a regime-dependent modeling flaw: Logistic Regression (49.50% accuracy) predicted “Up” on every test day, failing to generalize beyond the 2014–2021 bull regime and collapsing during the 2022 bear market. This structural rigidity reflects an “Always Buy” bias hard-coded by linear assumptions. In contrast, Random Forest (51.30% accuracy) captured latent non-linear signals—correctly identifying 26 Down days—by leveraging feature interactions such as Volatility × RSI. This 1.80% edge above random chance validates the regime-aware hypothesis and confirms statistical Alpha. However, to assess robustness, Task 6 will dissect model performance across volatility-defined regimes to determine where Alpha persists—and where it breaks down.
+<img width="1589" height="589" alt="image" src="https://github.com/user-attachments/assets/7bc21584-54a1-4dcf-9a65-a09d2765bf7f" />
+
 
 <br>
 <p align="center">
