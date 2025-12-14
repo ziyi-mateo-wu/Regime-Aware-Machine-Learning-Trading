@@ -23,11 +23,11 @@ This project implements an algorithmic trading strategy utilizing **Regime-Switc
 
 ### 📊 Detailed Analysis & Code
 
-[![View in nbviewer](https://img.shields.io/badge/View%20Full%20Notebook-nbviewer-orange?style=for-the-badge&logo=jupyter)](你的_nbviewer_新网址_粘贴在这里)
+[![View in nbviewer](https://img.shields.io/badge/View%20Full%20Notebook-nbviewer-orange?style=for-the-badge&logo=jupyter)]((https://nbviewer.org/github/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading/blob/main/Regime_Aware_ML_Strategy.ipynb))
 
 > 👆 **Click the button above** to render the full analysis with interactive charts (High Performance).
 
-[![Preview](results_cover.png)](你的_nbviewer_新网址_粘贴在这里)
+[![Preview](results_cover.png)]((https://nbviewer.org/github/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading/blob/main/Regime_Aware_ML_Strategy.ipynb))
 
 ![Model Performance](results_plot.png)
 ### 💻 How to Run
