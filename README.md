@@ -123,6 +123,28 @@ This transformation turns a marginal 51% model into a robust, regime-conditional
 ---
 
 ###  How to Run & View
+---
+
+### 💻 How to Run & View Results
+
+**Option 1: Quick View (Recommended)**
+* **Direct View:** Simply open the [Regime_Aware_ML_Strategy.ipynb](Regime_Aware_ML_Strategy.ipynb) file directly here on GitHub. All analytical results, visualizations, and confusion matrices are pre-rendered and attached to the file for immediate review without any setup.
+
+**Option 2: Local Execution**
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading.git](https://github.com/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading.git)
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pip install pandas numpy scikit-learn yfinance matplotlib seaborn
+    ```
+3.  **Run the analysis:**
+    ```bash
+    jupyter notebook Regime_Aware_ML_Strategy.ipynb
+    ```
+
+---
 
 1. Clone the repository.
 2. Install dependencies:
