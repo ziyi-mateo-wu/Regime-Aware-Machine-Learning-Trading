@@ -96,8 +96,6 @@ Visualizing the 2020 COVID-19 crash and the 2022 regime shift. The dataset conta
 #### 3. Regime-Based Performance Analysis
 The bar chart below illustrates the "Fair Weather Alpha". Note the clear performance degradation in the High Volatility regime (Red bar) compared to the Low Volatility regime (Green bar).
 
-
-
 <img width="100%" alt="Regime Analysis" src="regime_analysis.png" />
 
 #### 4. Confusion Matrix Comparison
