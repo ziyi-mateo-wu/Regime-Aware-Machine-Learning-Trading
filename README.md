@@ -111,7 +111,7 @@ Contrasting the "Always Buy" bias of Logistic Regression against the nuanced pre
 
 ---
 
-### 💡 Strategic Implication: The Volatility Filter
+###  Strategic Implication: The Volatility Filter
 
 The project proves that **"When to trade" is as important as "What to trade."** Instead of a static "always-on" predictor, the model functions best as a **Risk-On / Risk-Off Switch**:
 
@@ -122,9 +122,10 @@ This transformation turns a marginal 51% model into a robust, regime-conditional
 
 ---
 
-### 💻 How to Run
+###  How to Run & View
 
 1. Clone the repository.
 2. Install dependencies:
    ```bash
    pip install pandas numpy scikit-learn yfinance matplotlib seaborn
+3. 
