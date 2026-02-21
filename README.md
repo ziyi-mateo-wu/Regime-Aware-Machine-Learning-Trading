@@ -17,15 +17,15 @@ This project implements a **"Fair Weather Alpha"** strategy: instead of treating
 The pipeline is structured into four distinct engineering phases to ensuring statistical rigor and data integrity.
 
 #### Phase 1: Quantitative Feature Engineering
-Derived technical indicators to capture market dynamics:
-* **Trend:** 200-day Simple Moving Average (SMA) to identify long-term support.
-* **Momentum:** Relative Strength Index (RSI) with **Wilder’s Smoothing** to detect liquidity crises (e.g., March 2020).
-* **Volatility:** Rolling standard deviation of log-returns to quantify market fear.
+Derived technical indicators to capture market dynamics with high-fidelity:
+* **Trend:** 200-day Simple Moving Average (SMA) to identify long-term structural support.
+* **Momentum:** **Manually implemented** Relative Strength Index (RSI) with **Wilder’s Smoothing** to replicate industry-standard precision and ensure consistency with professional terminals.
+* **Volatility:** Rolling standard deviation of log-returns to quantify latent market fear.
 
-#### Phase 2: "Blind" Regime Calibration (Anti-Leakage)
-To strictly prevent **Look-Ahead Bias**, the regime threshold was calibrated exclusively on historical data:
-* **Calibration:** Calculated the median volatility ($\sigma_{train} \approx 0.007$) solely from the Training Set (2014-2021).
-* **Application:** Applied this *frozen* threshold to the Test Set (2022-2024) to segment markets into **"Calm"** vs. **"Volatile"**.
+#### Phase 2: System Integrity & "Blind" Calibration
+To strictly prevent **Look-Ahead Bias** and ensure engineering robustness:
+* **Anti-Leakage:** Calculated the median volatility ($\sigma_{train} \approx 0.007$) solely from the Training Set (2014-2021).
+* **Reproducibility:** Implemented a **Local CSV Caching strategy** for the 2,516-day dataset, neutralizing API instability and ensuring consistent experimental results across different environments.
 
 #### Phase 3: Adaptive Ensemble Modeling
 Comparative analysis of linear vs. non-linear estimators:
