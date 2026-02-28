@@ -1,6 +1,6 @@
 # Regime-Aware Machine Learning System for Market Strategy Prediction 📈
 
-> [cite_start]A quantitative research framework examining how volatility regimes shape the predictive performance of machine learning models in financial markets[cite: 194, 195].
+> A quantitative research framework examining how volatility regimes shape the predictive performance of machine learning models in financial markets.
 
 [![Status](https://img.shields.io/badge/Strategy-Volatility%20Filtering-blueviolet?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
 [![Performance](https://img.shields.io/badge/Calm%20Regime%20Acc-54.93%25-green?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
@@ -10,25 +10,25 @@
 
 ## 1. Executive Summary
 
-[cite_start]Financial markets are **heteroscedastic**—long periods of stability are interrupted by volatility shocks[cite: 197, 564]. [cite_start]Traditional ML models often assume stationarity and therefore fail during turbulent regimes[cite: 196].
+Financial markets are **heteroscedastic**—long periods of stability are interrupted by volatility shocks. Traditional ML models often assume stationarity and therefore fail during turbulent regimes.
 
 This project develops a **Regime-Aware Machine Learning System** that:
-- [cite_start]Segments markets into **volatility regimes** using a statistically grounded threshold[cite: 208, 935].
-- [cite_start]Predicts next-day SPY direction using engineered trend, momentum, and volatility features[cite: 207, 383].
-- [cite_start]Converts a marginal 51.30% classifier into a **regime-conditional trading signal**[cite: 883, 1076].
-- [cite_start]Reveals a **+4.23% accuracy spread** between calm and volatile regimes[cite: 980, 1050].
+- Segments markets into **volatility regimes** using a statistically grounded threshold.
+- Predicts next-day SPY direction using engineered trend, momentum, and volatility features.
+- Converts a marginal 51.30% classifier into a **regime-conditional trading signal**.
+- Reveals a **+4.23% accuracy spread** between calm and volatile regimes.
 
-> [cite_start]**Core Insight:** The model’s predictive edge exists *only* in low-volatility environments[cite: 1048, 1054]. [cite_start]In high volatility, technical signals lose meaning[cite: 1056].
+> **Core Insight:** The model’s predictive edge exists *only* in low-volatility environments. In high volatility, technical signals lose meaning.
 
 ---
 
 ## 2. Context & Motivation 💡
 
-[cite_start]Inspired by practices in **Credit Risk Control (HSBC)**, where models must remain robust under structural breaks, this project applies similar principles to market prediction[cite: 1080, 1083].
+Inspired by practices in **Credit Risk Control (HSBC)**, where models must remain robust under structural breaks, this project applies similar principles to market prediction.
 
 Instead of treating prediction as a static task, the system implements a **“Fair Weather Alpha”** approach:
-- [cite_start]**Trade only when the regime supports the model’s assumptions**[cite: 1058].
-- [cite_start]**Stay in cash when volatility invalidates technical structure**[cite: 1064, 1076].
+- **Trade only when the regime supports the model’s assumptions**.
+- **Stay in cash when volatility invalidates technical structure**.
 
 ---
 
@@ -37,18 +37,18 @@ Instead of treating prediction as a static task, the system implements a **“Fa
 The pipeline is engineered in four phases:
 
 ### Phase 1 — Quantitative Feature Engineering
-- [cite_start]**Trend:** SMA(50), SMA(200) [cite: 433, 434]
-- [cite_start]**Momentum:** Custom RSI (Wilder’s Smoothing via EWM) [cite: 412, 436]
-- [cite_start]**Volatility:** 20-day rolling standard deviation [cite: 439, 561]
+- **Trend:** SMA(50), SMA(200)
+- **Momentum:** Custom RSI (Wilder’s Smoothing via EWM)
+- **Volatility:** 20-day rolling standard deviation
 
 ### Phase 2 — System Integrity & Blind Calibration
-- [cite_start]**Anti-leakage:** Volatility threshold calibrated *only* on training data[cite: 924, 1046].
-- [cite_start]**Local Persistence:** CSV caching for reproducibility[cite: 253, 258].
-- [cite_start]**Causality:** Strict chronological alignment and shift(-1) target engineering[cite: 585, 663].
+- **Anti-leakage:** Volatility threshold calibrated *only* on training data.
+- **Local Persistence:** CSV caching for reproducibility.
+- **Causality:** Strict chronological alignment and shift(-1) target engineering.
 
 ### Phase 3 — Adaptive Ensemble Modeling
-- [cite_start]**Logistic Regression:** Linear baseline fitted to log-returns[cite: 690, 726].
-- [cite_start]**Random Forest:** Non-linear challenger with `max_depth=5` to prevent overfitting[cite: 693, 730].
+- **Logistic Regression:** Linear baseline fitted to log-returns.
+- **Random Forest:** Non-linear challenger with `max_depth=5` to prevent overfitting.
 
 ---
 
@@ -56,7 +56,7 @@ The pipeline is engineered in four phases:
 
 ### 4.1 Dynamic Regime Classification (Blind Calibration)
 
-[cite_start]To ensure methodological rigor, the regime threshold $\theta$ is derived exclusively from the training-set median (2014–2021)[cite: 926, 971]:
+To ensure methodological rigor, the regime threshold $\theta$ is derived exclusively from the training-set median (2014–2021):
 
 $$
 R_t = 
@@ -67,12 +67,12 @@ R_t =
 $$
 
 Where:
-- [cite_start]$\sigma_t$ = 20-day rolling volatility[cite: 562].
-- [cite_start]$\theta_{train} = 0.00701$[cite: 971].
+- $\sigma_t$ = 20-day rolling volatility.
+- $\theta_{train} = 0.00701$.
 
 ### 4.2 Target Engineering (Preventing Look-Ahead Bias)
 
-[cite_start]The target $Y_t$ is aligned with the next day's return $r_{t+1}$ using a strict chronological shift[cite: 580, 662]:
+The target $Y_t$ is aligned with the next day's return $r_{t+1}$ using a strict chronological shift:
 
 $$
 Y_t = \mathbb{I}(r_{t+1} > 0)
@@ -82,19 +82,19 @@ $$
 
 ## 5. Performance & Alpha Discovery 📊
 
-### [cite_start]5.1 Model Comparison (Test Set: 2022–2024) [cite: 591, 667]
+### 5.1 Model Comparison (Test Set: 2022–2024)
 
 | Metric | Logistic Regression | Random Forest |
 | :--- | :--- | :--- |
-| **Accuracy** | [cite_start]49.50% [cite: 855] | [cite_start]**51.30%** [cite: 857] |
-| **Behavior** | [cite_start]Structural "Always-Buy" Bias [cite: 880] | [cite_start]Captures non-linear signals [cite: 886] |
+| **Accuracy** | 49.50% | **51.30%** |
+| **Behavior** | Structural "Always-Buy" Bias | Captures non-linear signals |
 
-### [cite_start]5.2 Regime Spread (Key Finding) [cite: 972]
+### 5.2 Regime Spread (Key Finding)
 
 | Regime | Condition | Accuracy | Observations ($N$) |
 | :--- | :--- | :--- | :--- |
-| **Low Volatility** | $\sigma_t \leq 0.00701$ | [cite_start]**54.93%** [cite: 976] | [cite_start]71 [cite: 976] |
-| **High Volatility** | $\sigma_t > 0.00701$ | [cite_start]50.70% [cite: 978] | [cite_start]430 [cite: 978] |
+| **Low Volatility** | $\sigma_t \leq 0.00701$ | **54.93%** | 71 |
+| **High Volatility** | $\sigma_t > 0.00701$ | 50.70% | 430 |
 
 ---
 
@@ -113,14 +113,14 @@ $$
 
 ## 7. Developer Reflection: Bridging Theory & Industry
 
-[cite_start]This project transitions from "scripting" to **financial engineering** by enforcing[cite: 1085]:
-- [cite_start]**Reproducibility:** Enforcing a global random seed (`np.random.seed(42)`) to ensure deterministic performance[cite: 1087, 1088].
-- [cite_start]**Vectorization:** Leveraging Pandas `ewm` and vectorized arithmetic for institutional-grade indicator speed[cite: 1089, 1090].
-- [cite_start]**Methodological Rigor:** Implementing "Blind Calibration" to prevent Look-Ahead Bias and ensure out-of-sample integrity[cite: 1091].
+This project transitions from "scripting" to **financial engineering** by enforcing:
+- **Reproducibility:** Enforcing a global random seed (`np.random.seed(42)`) to ensure deterministic performance.
+- **Vectorization:** Leveraging Pandas `ewm` and vectorized arithmetic for institutional-grade indicator speed.
+- **Methodological Rigor:** Implementing "Blind Calibration" to prevent Look-Ahead Bias and ensure out-of-sample integrity.
 
 ---
 
 ## 8. Repository Structure
-- [cite_start]`Regime_Aware_ML_Strategy.ipynb`: Full implementation, data audit, and reflection[cite: 220, 1068].
-- [cite_start]`spy_data_fixed_10y.csv`: Local data cache (2014-2024)[cite: 259, 311].
+- `Regime_Aware_ML_Strategy.ipynb`: Full implementation, data audit, and reflection.
+- `spy_data_fixed_10y.csv`: Local data cache (2014-2024).
 - `README.md`: Executive research summary.
