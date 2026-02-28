@@ -61,36 +61,32 @@ The pipeline is engineered in four phases:
 
 ## 4. Mathematical Framework 📐
 
-### 4.1 Regime Classification
+### 4.1 Dynamic Regime Classification
 
+Market regimes \(R_t\) are classified based on rolling volatility \(\sigma_t\) relative to the training-set median threshold \(\theta_{train}\):
 
-
-\[
-R_t =
-\begin{cases}
-\text{Volatile}, & \sigma_t > \theta_{\text{train}} \\
-\text{Calm}, & \sigma_t \le \theta_{\text{train}}
+$$
+R_t = 
+\begin{cases} 
+\text{Volatile (Bear)}, & \sigma_t > \theta_{train} \\
+\text{Stable (Bull)}, & \sigma_t \leq \theta_{train}
 \end{cases}
-\]
-
-
+$$
 
 Where:
 
-- \( \sigma_t \) = rolling volatility  
-- \( \theta_{\text{train}} \approx 0.007 \) = median training-set volatility  
+- \(\sigma_t\) = rolling volatility  
+- \(\theta_{train} \approx 0.007\) = median training-set volatility  
+
+---
 
 ### 4.2 Target Engineering
 
+To prevent look-ahead bias, the target \(Y_t\) is aligned with the next day's return \(r_{t+1}\):
 
-
-\[
+$$
 Y_t = \mathbb{I}(r_{t+1} > 0)
-\]
-
-
-
-Aligned strictly to prevent **Look-Ahead Bias**.
+$$
 
 ---
 
@@ -103,12 +99,14 @@ Aligned strictly to prevent **Look-Ahead Bias**.
 | Accuracy | 49.50% | **51.30%** |
 | Behavior | “Always Buy” | Captures non-linear signals |
 
+---
+
 ### 5.2 Regime Spread (Key Finding)
 
 | Regime | Condition | Accuracy | N |
 |--------|-----------|----------|---|
-| **Low Volatility** | \( \sigma_t \le 0.007 \) | **54.93%** | 71 |
-| **High Volatility** | \( \sigma_t > 0.007 \) | 50.70% | 430 |
+| **Low Volatility** | \(\sigma_t \le 0.007\) | **54.93%** | 71 |
+| **High Volatility** | \(\sigma_t > 0.007\) | 50.70% | 430 |
 
 > **The model only works in calm markets.**  
 > High volatility destroys signal quality.
@@ -141,8 +139,8 @@ This system demonstrates that:
 
 ### Practical Interpretation
 
-- **Risk-Off:** \( \sigma_t > 0.007 \) → Stay in cash  
-- **Risk-On:** \( \sigma_t \le 0.007 \) → Use model predictions  
+- **Risk-Off:** \(\sigma_t > 0.007\) → Stay in cash  
+- **Risk-On:** \(\sigma_t \le 0.007\) → Use model predictions  
 
 ---
 
@@ -170,14 +168,17 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
 pip install pandas numpy scikit-learn yfinance matplotlib seaborn
-```
 
+```
 ## 9. Repository Structure
 Regime-Aware-Machine-Learning-Trading/
 │── Regime_Aware_ML_Strategy.ipynb
 │── spy_data_fixed_10y.csv
 │── README.md
 └── (optional) figures/
+
+
+
 
 # 4. Run the notebook
 jupyter notebook Regime_Aware_ML_Strategy.ipynb
