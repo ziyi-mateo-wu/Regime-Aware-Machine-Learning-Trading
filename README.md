@@ -289,3 +289,32 @@ Regime-Aware-Machine-Learning-Trading/
 ├── spy_data_fixed_10y.csv           # Local cache of SPY OHLCV data (10 years)
 ├── README.md                        # Project documentation (this file)
 └── (optional) figures/              # Exported plots and visualizations
+
+
+### 10.2 Quick view (recommended)
+
+You can view the full analysis directly in the notebook:
+
+- Open `Regime_Aware_ML_Strategy.ipynb` on GitHub.  
+- All key plots, metrics, and confusion matrices are pre-rendered and visible without any local setup.
+
+### 10.3 Local execution
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/ziyi-mateo-wu/Regime-Aware-Machine-Learning-Trading.git
+cd Regime-Aware-Machine-Learning-Trading
+
+# 2. (Optional) Create a virtual environment
+python -m venv venv
+# macOS / Linux:
+source venv/bin/activate
+# Windows:
+# venv\Scripts\activate
+
+# 3. Install dependencies
+pip install pandas numpy scikit-learn yfinance matplotlib seaborn
+
+# 4. Run the notebook
+jupyter notebook Regime_Aware_ML_Strategy.ipynb
+
