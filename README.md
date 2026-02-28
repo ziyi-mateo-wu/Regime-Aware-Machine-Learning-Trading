@@ -1,6 +1,6 @@
 # Regime-Aware Machine Learning System for Market Strategy Prediction 📈
 
-> A quantitative research framework examining how volatility regimes shape the predictive performance of machine learning models in financial markets.
+> [cite_start]A quantitative research framework examining how volatility regimes shape the predictive performance of machine learning models in financial markets[cite: 194, 195].
 
 [![Status](https://img.shields.io/badge/Strategy-Volatility%20Filtering-blueviolet?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
 [![Performance](https://img.shields.io/badge/Calm%20Regime%20Acc-54.93%25-green?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-[cite_start]Financial markets are **heteroscedastic**—long periods of stability are interrupted by volatility shocks[cite: 197, 564]. [cite_start]Traditional ML models assume stationarity and therefore fail during turbulent regimes[cite: 196].
+[cite_start]Financial markets are **heteroscedastic**—long periods of stability are interrupted by volatility shocks[cite: 197, 564]. [cite_start]Traditional ML models often assume stationarity and therefore fail during turbulent regimes[cite: 196].
 
 This project develops a **Regime-Aware Machine Learning System** that:
 - [cite_start]Segments markets into **volatility regimes** using a statistically grounded threshold[cite: 208, 935].
@@ -95,8 +95,6 @@ $$
 | :--- | :--- | :--- | :--- |
 | **Low Volatility** | $\sigma_t \leq 0.00701$ | [cite_start]**54.93%** [cite: 976] | [cite_start]71 [cite: 976] |
 | **High Volatility** | $\sigma_t > 0.00701$ | [cite_start]50.70% [cite: 978] | [cite_start]430 [cite: 978] |
-
-> [cite_start]**Strategic Verdict:** The model demonstrates a significant statistical edge in calm markets (+4.23% spread)[cite: 980, 1050].
 
 ---
 
