@@ -1,6 +1,6 @@
 # Regime-Aware Machine Learning System for Market Strategy Prediction 📈
 
-> A quantitative research framework examining how volatility regimes shape the predictive performance of machine learning models in financial markets.
+> [cite_start]**Quantitative Research Framework**: Investigating how heteroscedastic volatility regimes shape the predictive boundaries of machine learning models in non-stationary financial markets[cite: 3, 29, 34].
 
 [![Status](https://img.shields.io/badge/Strategy-Volatility%20Filtering-blueviolet?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
 [![Performance](https://img.shields.io/badge/Calm%20Regime%20Acc-54.93%25-green?style=for-the-badge)](https://github.com/ziyi-mateo-wu)
@@ -8,119 +8,77 @@
 
 ---
 
-## 1. Executive Summary
+## 1. Executive Summary 📄
 
-Financial markets are **heteroscedastic**—long periods of stability are interrupted by volatility shocks. Traditional ML models often assume stationarity and therefore fail during turbulent regimes.
+[cite_start]Financial time-series forecasting is inherently challenging due to the **non-stationary** and **stochastic** nature of markets[cite: 29]. [cite_start]Traditional ML models often fail because they assume a static environment and ignore **heteroscedasticity**—the clustering of volatility[cite: 30, 31, 398].
 
-This project develops a **Regime-Aware Machine Learning System** that:
-- Segments markets into **volatility regimes** using a statistically grounded threshold.
-- Predicts next-day SPY direction using engineered trend, momentum, and volatility features.
-- Converts a marginal 51.30% classifier into a **regime-conditional trading signal**.
-- Reveals a **+4.23% accuracy spread** between calm and volatile regimes.
-
-> **Core Insight:** The model’s predictive edge exists *only* in low-volatility environments. In high volatility, technical signals lose meaning.
+[cite_start]This project proposes a **"Regime-Aware"** framework that[cite: 33]:
+- [cite_start]**Quantifies Market States**: Segments data into "Calm" and "Volatile" regimes using a statistically grounded threshold[cite: 42, 729].
+- [cite_start]**Discovers the Alpha Boundary**: Proves that model accuracy soars to **54.93%** in stable conditions but degrades to near-random (50.70%) during shocks[cite: 882, 883, 884].
+- [cite_start]**Engineers a "Fair Weather Alpha" Strategy**: Transforms a weak 51.30% classifier into a robust, regime-conditional system by identifying *when* to trade[cite: 891, 910, 911].
 
 ---
 
-## 2. Context & Motivation 💡
+## 2. Context & Motivation: From Industry to Theory 💡
 
-Inspired by practices in **Credit Risk Control (HSBC)**, where models must remain robust under structural breaks, this project applies similar principles to market prediction.
+[cite_start]The conceptual foundation stems from my experience in **HSBC Credit Risk Control and Management**[cite: 19, 914]. [cite_start]I observed that institutional models often fail when their underlying assumptions about volatility are violated[cite: 915]. 
 
-Instead of treating prediction as a static task, the system implements a **“Fair Weather Alpha”** approach:
-- **Trade only when the regime supports the model’s assumptions**.
-- **Stay in cash when volatility invalidates technical structure**.
+[cite_start]This project transitions from simple "scripting" to **Financial Engineering** by implementing a system that treats volatility not as noise, but as a **Model Activation Filter**[cite: 917, 919].
 
 ---
 
-## 3. Project Architecture 🏗️
+## 3. Methodological Rigor: Ensuring System Integrity 🏗️
 
-The pipeline is engineered in four phases:
+### 3.1 "Blind Threshold" Calibration (Anti-Leakage)
+[cite_start]To strictly prevent **Look-Ahead Bias**, the regime threshold ($\theta$) is derived exclusively from historical data[cite: 415, 730, 925]:
+- [cite_start]**Calibration**: The median volatility ($\theta_{train} = 0.00701$) is computed using only the **Training Set (2014-2021)**[cite: 731, 760, 805, 880].
+- [cite_start]**Zero-Leakage Implementation**: The test phase (2022-2024) remains "blind" to future distributions, ensuring that results reflect a realistic trading scenario[cite: 522, 523, 598, 758].
 
-### Phase 1 — Quantitative Feature Engineering
-- **Trend:** SMA(50), SMA(200)
-- **Momentum:** Custom RSI (Wilder’s Smoothing via EWM)
-- **Volatility:** 20-day rolling standard deviation
-
-### Phase 2 — System Integrity & Blind Calibration
-- **Anti-leakage:** Volatility threshold calibrated *only* on training data.
-- **Local Persistence:** CSV caching for reproducibility.
-- **Causality:** Strict chronological alignment and shift(-1) target engineering.
-
-### Phase 3 — Adaptive Ensemble Modeling
-- **Logistic Regression:** Linear baseline fitted to log-returns.
-- **Random Forest:** Non-linear challenger with `max_depth=5` to prevent overfitting.
+### 3.2 Adaptive Ensemble Modeling
+- [cite_start]**Linear Baseline (Logistic Regression)**: Failed due to a structural **"Always-Buy" bias** hard-coded during the secular bull market of 2014-2021[cite: 524, 706, 714].
+- [cite_start]**Non-Linear Challenger (Random Forest)**: Explicitly constrained with `max_depth=5` to force generalization and prevent the model from memorizing financial noise[cite: 530, 531, 563, 604].
 
 ---
 
 ## 4. Mathematical Framework 📐
 
-### 4.1 Dynamic Regime Classification (Blind Calibration)
-
-To ensure methodological rigor, the regime threshold $\theta$ is derived exclusively from the training-set median (2014–2021):
+### 4.1 Dynamic Regime Classification
+[cite_start]Market regimes ($R_t$) are classified based on the rolling volatility ($\sigma_t$) relative to the training median threshold ($\theta_{train}$)[cite: 735, 736]:
 
 $$
 R_t = 
 \begin{cases} 
-\text{Volatile}, & \sigma_t > \theta_{train} \\
-\text{Stable}, & \sigma_t \leq \theta_{train}
+\text{Volatile}, & \text{if } \sigma_t > \theta_{train} \\
+\text{Stable}, & \text{if } \sigma_t \leq \theta_{train}
 \end{cases}
 $$
 
-Where:
-- $\sigma_t$ = 20-day rolling volatility.
-- $\theta_{train} = 0.00701$.
 
-### 4.2 Target Engineering (Preventing Look-Ahead Bias)
 
-The target $Y_t$ is aligned with the next day's return $r_{t+1}$ using a strict chronological shift:
-
-$$
-Y_t = \mathbb{I}(r_{t+1} > 0)
-$$
+### 4.2 Target Engineering (Causality Protocol)
+[cite_start]The prediction variable is aligned using a strict **shift(-1)** operation to ensure features ($X_t$) only predict the *future* return ($r_{t+1}$)[cite: 419, 420, 436, 497]:
+$$Y_t = \mathbb{I}(r_{t+1} > 0)$$
 
 ---
 
-## 5. Performance & Alpha Discovery 📊
+## 5. Alpha Discovery & Visual Interpretation 📊
 
-### 5.1 Model Comparison (Test Set: 2022–2024)
+### 5.1 The "Tale of Two Markets" (Task 1 & 2)
+[cite_start]As shown in **Figure 6.1**, the dataset captures a structural shift from the **Calm (2014-2019)** to the **Storm (2020 & 2022)**[cite: 206, 207, 208]. [cite_start]This visual evidence of **Volatility Clustering** validates the necessity of a Regime-Aware architecture[cite: 214, 397, 399].
 
-| Metric | Logistic Regression | Random Forest |
-| :--- | :--- | :--- |
-| **Accuracy** | 49.50% | **51.30%** |
-| **Behavior** | Structural "Always-Buy" Bias | Captures non-linear signals |
-
-### 5.2 Regime Spread (Key Finding)
-
-| Regime | Condition | Accuracy | Observations ($N$) |
-| :--- | :--- | :--- | :--- |
-| **Low Volatility** | $\sigma_t \leq 0.00701$ | **54.93%** | 71 |
-| **High Volatility** | $\sigma_t > 0.00701$ | 50.70% | 430 |
+### 5.2 Strategy Resilience (Task 6 Visualization)
+[cite_start]**The Core Finding**: Accuracy decomposition reveals that predictive signals are most reliable when market noise is lowest[cite: 918].
+* **Low Volatility ($N=71$)**: **54.93% Accuracy**. [cite_start]Technical patterns (SMA, RSI) exhibit high structural fidelity[cite: 882, 889].
+* **High Volatility ($N=430$)**: **50.70% Accuracy**. [cite_start]Exogenous shocks (macro/geopolitical) render technical signals irrelevant[cite: 883, 890].
 
 ---
 
-## 6. Visual Analysis 📉
+## 6. Project Navigation 💻
 
-### 6.1 SPY 10-Year Structural Context (2014-2024)
-<img width="100%" src="https://github.com/user-attachments/assets/3805d9b4-6b7d-42e5-9cb7-abaf01de1201" />
-
-### 6.2 Regime Component: Rolling Volatility (Market Fear)
-<img width="100%" src="https://github.com/user-attachments/assets/c152e344-d49c-4925-9000-d2aa0a46bc0e" />
-
-### 6.3 Strategy Resilience Check: Accuracy by Regime
-<img width="100%" src="https://github.com/user-attachments/assets/a85f0d3b-c562-40c9-b50a-9cc7decb01b1" />
+- [cite_start]**[Regime_Aware_ML_Strategy.ipynb](Regime_Aware_ML_Strategy.ipynb)**: Full implementation, including vectorized RSI via Wilder’s Smoothing and deterministic training with `np.random.seed(42)`[cite: 35, 53, 75, 231, 921, 923].
+- [cite_start]**[spy_data_fixed_10y.csv](spy_data_fixed_10y.csv)**: 10-year Daily OHLCV local cache (2,516 observations)[cite: 86, 111, 204, 205].
 
 ---
 
-## 7. Developer Reflection: Bridging Theory & Industry
-
-This project transitions from "scripting" to **financial engineering** by enforcing:
-- **Reproducibility:** Enforcing a global random seed (`np.random.seed(42)`) to ensure deterministic performance.
-- **Vectorization:** Leveraging Pandas `ewm` and vectorized arithmetic for institutional-grade indicator speed.
-- **Methodological Rigor:** Implementing "Blind Calibration" to prevent Look-Ahead Bias and ensure out-of-sample integrity.
-
----
-
-## 8. Repository Structure
-- `Regime_Aware_ML_Strategy.ipynb`: Full implementation, data audit, and reflection.
-- `spy_data_fixed_10y.csv`: Local data cache (2014-2024).
-- `README.md`: Executive research summary.
+### 💡 Final Verdict
+[cite_start]The project definitively proves that **"When to trade" is as important as "What to trade"**[cite: 911]. [cite_start]In financial ML, Alpha is conditional; it thrives when the market behaves "normally" and degrades into randomness during chaos[cite: 891, 900].
