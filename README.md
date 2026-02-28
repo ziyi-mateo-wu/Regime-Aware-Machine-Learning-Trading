@@ -170,20 +170,14 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
 pip install pandas numpy scikit-learn yfinance matplotlib seaborn
-
-# 4. Run the notebook
-jupyter notebook Regime_Aware_ML_Strategy.ipynb
-
 ```
-### Option 2 — Local Execution
+
+## 9. Repository Structure
 Regime-Aware-Machine-Learning-Trading/
 │── Regime_Aware_ML_Strategy.ipynb
 │── spy_data_fixed_10y.csv
 │── README.md
 └── (optional) figures/
 
-
-
-
-
-
+# 4. Run the notebook
+jupyter notebook Regime_Aware_ML_Strategy.ipynb
