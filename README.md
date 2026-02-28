@@ -94,5 +94,5 @@ The project proves that **"When to trade" is as important as "What to trade."** 
 ---
 
 ## 7. How to Run & View
-- **Quick View**: Open [Regime_Aware_ML_Strategy.ipynb](Regime_Aware_ML_Strategy.ipynb) directly on GitHub to see pre-rendered results.
+- **Quick View**: Open [Regime_Aware_ML_Strategy.ipynb](Regime_Aware_ML_Strategy_[40457834].ipynb) directly on GitHub to see pre-rendered results.
 - **Local Execution**: Clone and install `pandas`, `numpy`, `scikit-learn`, `yfinance`, `matplotlib`, `seaborn`.
